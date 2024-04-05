@@ -10,5 +10,6 @@ const {
 rsvpRouter.post('/rsvp', rsvpToEvent);
 rsvpRouter.delete('/cancel/:id', cancelRSVP);
 rsvpRouter.get('/event/:eventId', getEventRSVPs);
+rsvpRouter.get('/user/:userId', getUserRSVPs);
 
 module.exports = rsvpRouter;

@@ -1,4 +1,6 @@
--- Create Users table
+CREATE DATABASE donations_db;
+\c donations_db
+
 CREATE TABLE Users (
     user_id SERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
@@ -10,7 +12,8 @@ CREATE TABLE Users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create DonationEvents table
+-- username, email, password, full_Name, phone_Number, location
+-- -- Create DonationEvents table
 CREATE TABLE DonationEvents (
     event_id SERIAL PRIMARY KEY,
     organizer_id INT REFERENCES Users(user_id) NOT NULL,

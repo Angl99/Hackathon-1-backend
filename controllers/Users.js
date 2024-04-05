@@ -1,4 +1,64 @@
-const db = require('../db');
+// import db from "../db/config.js";
+
+
+// // desc : Get all users
+// // route : GET /users
+// export const getAllUsers = async (req, res) => {
+//   try {
+//     const users = await db.any('SELECT * FROM Users');
+//     res.json(users);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// };
+
+// // desc : Get a user
+// // route : GET /users/:id
+// export const getUser = async (req, res) => {
+//   try {
+//     const user = await db.any('SELECT * FROM Users WHERE id = $1', [req.params.id]);
+//     res.json(user);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// }
+
+// // desc : Create a user
+// // route : POST /users
+// export const createUser = async (req, res) => {
+//   try {
+//     const { username, email, phone_number } = req.body;
+//     const newUser = await db.one('INSERT INTO Users (username, email, phone_number) VALUES ($1, $2, $3) RETURNING *', [username, email, phone_number]);
+//     res.status(201).json(newUser);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// }
+
+// // desc : Update a user
+// // route : PUT /users/:id
+// export const updateUser = async (req, res) => {
+//   try {
+//     const { username, email, phone_number } = req.body;
+//     const user = await db.one('UPDATE Users SET username = $1, email = $2, phone_number = $3 WHERE id = $4 RETURNING *', [username, email, phone_number, req.params.id]);
+//     res.json(user);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// }
+
+// // desc : Delete a user
+// // route : DELETE /users/:id
+// export const deleteUser = async (req, res) => {
+//   try {
+//     const user = await db.one('DELETE FROM Users WHERE id = $1 RETURNING *', [req.params.id]);
+//     res.json(user);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// }
+
+import db from '../db/config.js';
 
 // Get a user by ID
 async function getUserById(req, res) {
@@ -94,7 +154,7 @@ async function getAllUsers(req, res) {
   }
 }
 
-module.exports = {
+export {
   getUserById,
   getUserHostedEvents,
   getUserRSVPs,
