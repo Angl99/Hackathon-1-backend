@@ -6,23 +6,24 @@
 
 
 const express = require('express');
+// import express from 'express'
 const cors = require('cors');
 const app = express();
-const morgn = require('morgn');
+const morgan = require('morgan');
 
-const userRouter = require('./routes/userRouter');
-const rsvpRouter = require('./routes/rsvpRouter');
-const donationEventRouter = require('./routes/donationEventRouter');
+const users = require('./routers/users');
+const rsvpEvent = require('./routers/rsvpEvent');
+const donationEvents = require('./routers/donationEvents');
 
 // Mount the routers
 app.use(cors())
 app.use(express.json());
-app.use(morgan("dev")
+app.use (morgan("dev"))
 
-app.use('/events', donationEventRouter);
-app.use('/users', userRouter);
-app.use('/rsvps', rsvpRouter);
-app.use('/events', eventRouter);
+app.use('/events', donationEvents);
+app.use('/users', users);
+app.use('/rsvps', rsvpEvent);
+// c
 
 // Start the server
 app.listen(3000, () => {

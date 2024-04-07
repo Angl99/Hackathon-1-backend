@@ -1,5 +1,5 @@
 const express = require('express');
-const userRouter = express.Router();
+const users = express.Router();
 
 const {
   getUserById,
@@ -8,13 +8,15 @@ const {
   createUser,
   updateUser,
   getAllUsers,
-} = require('./controllers/userControllers');
+  deleteUser
+} = require('../controllers/users');
 
-userRouter.get('/:id', getUserById);
-userRouter.get('/:userId/hosted-events', getUserHostedEvents);
-userRouter.get('/:userId/rsvps', getUserRSVPs);
-userRouter.post('/create', createUser);
-userRouter.put('/:id', updateUser);
-userRouter.get('/', getAllUsers);
+users.get('/:userId', getUserById);
+users.get('/:userId/hosted-events', getUserHostedEvents);
+users.get('/:userId/rsvps', getUserRSVPs);
+users.post('/', createUser);
+users.put('/:userId', updateUser);
+users.get('/', getAllUsers);
+users.delete('/:userId', deleteUser);
 
-module.exports = userRouter;
+module.exports = users;

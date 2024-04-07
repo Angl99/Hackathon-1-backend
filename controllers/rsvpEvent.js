@@ -1,4 +1,4 @@
-const db = require('../db');
+const  db  = require('../db/config'); // Assuming you have a db = require('../db/config');
 
 // RSVP to a donation event
 async function rsvpToEvent(req, res) {
@@ -37,7 +37,7 @@ async function rsvpToEvent(req, res) {
 
 // Cancel an RSVP
 async function cancelRSVP(req, res) {
-  const rsvpId = req.params.id;
+  const rsvpId = req.params.rsvpId;
 
   try {
     const deletedRSVP = await db.one('DELETE FROM RSVPs WHERE rsvp_id = $1 RETURNING *', [rsvpId]);
@@ -83,10 +83,34 @@ async function getUserRSVPs(req, res) {
     res.status(500).json({ error: err.message });
   }
 }
+// const db = require('./db'); // Assuming you have a db module that exports your pg-promise database instance
+
+
+async function updateRSVP(req, res) {
+ const {rsvpId } = req.params; // Extract RSVP ID from request parameters
+ const { rsvp_status } = req.body; // Extract RSVP status from request body
+
+ try {
+    // Update the RSVP status in the database
+    const result = await db.none('UPDATE RSVPs SET rsvp_status = $1 WHERE rsvp_id = $2', [rsvp_status, rsvpId]);
+
+    // Check if the update was successful
+    if (result) {
+      res.status(200).json({ message: 'RSVP updated successfully' });
+    } else {
+      res.status(404).json({ error: 'RSVP not found' });
+    }
+ } catch (err) {
+    // Handle any errors that occur during the update
+    res.status(500).json({ error: err.message });
+ }
+}
+
 
 module.exports = {
   rsvpToEvent,
   cancelRSVP,
   getEventRSVPs,
-  getUserRSVPs
+  getUserRSVPs,
+  updateRSVP
 };

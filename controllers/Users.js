@@ -58,11 +58,12 @@
 //   }
 // }
 
-import db from '../db/config.js';
+// import db from '../db/config.js';
+const db = require('../db/config');
 
 // Get a user by ID
 async function getUserById(req, res) {
-  const userId = req.params.id;
+  const userId = req.params.userId;
 
   try {
     const user = await db.one('SELECT * FROM Users WHERE user_id = $1', [userId]);
@@ -129,7 +130,7 @@ async function createUser(req, res) {
 
 // Update a user
 async function updateUser(req, res) {
-  const userId = req.params.id;
+  const userId = req.params.userId;
   const { username, email, password, fullName, phoneNumber, location } = req.body;
 
   try {
@@ -154,11 +155,29 @@ async function getAllUsers(req, res) {
   }
 }
 
-export {
+
+async function deleteUser(req, res) {
+  const userId = req.params.userId;
+  try {
+    // Delete all RSVPs associated with the user
+    await db.none('DELETE FROM RSVPs WHERE user_id = $1', [userId]);
+
+    // Delete all hosted events associated with the user
+    await db.none('DELETE FROM DonationEvents WHERE organizer_id = $1', [userId]);
+
+    const deletedUser = await db.one('DELETE FROM Users WHERE user_id = $1 RETURNING *', [userId]);
+    res.json(deletedUser);
+  } catch (err) {
+    res.status(404).json({ error: `User with ID ${userId} not found` });
+  }
+}
+
+module.exports = {
   getUserById,
   getUserHostedEvents,
   getUserRSVPs,
   createUser,
   updateUser,
-  getAllUsers
+  getAllUsers,
+  deleteUser
 };

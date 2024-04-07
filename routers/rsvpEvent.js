@@ -5,11 +5,13 @@ const {
   rsvpToEvent,
   cancelRSVP,
   getEventRSVPs,
-} = require('./controllers/rsvpControllers');
+  updateRSVP,
+} = require('../controllers/rsvpEvent');
 
-rsvpRouter.post('/rsvp', rsvpToEvent);
-rsvpRouter.delete('/cancel/:id', cancelRSVP);
+rsvpRouter.post('/', rsvpToEvent);
+rsvpRouter.delete('/:rsvpId', cancelRSVP);
 rsvpRouter.get('/event/:eventId', getEventRSVPs);
-rsvpRouter.get('/user/:userId', getUserRSVPs);
+// rsvpRouter.get('/user/:userId', getUserRSVPs);
+rsvpRouter.put('/:rsvpId', updateRSVP);
 
 module.exports = rsvpRouter;

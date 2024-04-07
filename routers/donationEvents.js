@@ -7,12 +7,12 @@ const {
   getEventById,
   updateEvent,
   deleteEvent,
-} = require('./controllers/eventControllers');
+} = require('../controllers/donationEvents');
 
-eventRouter.post('/create', createEvent);
+eventRouter.post('/', createEvent);
 eventRouter.get('/', getAllEvents);
-eventRouter.get('/:id', getEventById);
-eventRouter.put('/:id', updateEvent);
-eventRouter.delete('/:id', deleteEvent);
+eventRouter.get('/:eventId', getEventById);
+eventRouter.put('/:eventId', updateEvent);
+eventRouter.delete('/:eventId', deleteEvent);
 
 module.exports = eventRouter;

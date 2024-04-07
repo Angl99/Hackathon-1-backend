@@ -1,4 +1,4 @@
-const db = require('../db');
+const db = require('../db/config');
 
 // Create a new donation event
 async function createEvent(req, res) {
@@ -34,7 +34,7 @@ async function getAllEvents(req, res) {
 
 // Get a donation event by ID
 async function getEventById(req, res) {
-  const eventId = req.params.id;
+  const eventId = req.params.eventId;
 
   try {
     const event = await db.one('SELECT * FROM DonationEvents WHERE event_id = $1', [eventId]);
@@ -46,7 +46,7 @@ async function getEventById(req, res) {
 
 // Update a donation event
 async function updateEvent(req, res) {
-  const eventId = req.params.id;
+  const eventId = req.params.eventId;
   const { eventName, description, eventDate, startTime, endTime, location, foodType, quantity } = req.body;
 
   try {
@@ -63,7 +63,7 @@ async function updateEvent(req, res) {
 
 // Delete a donation event
 async function deleteEvent(req, res) {
-  const eventId = req.params.id;
+  const eventId = req.params.evenId;
 
   try {
     // Delete all RSVPs associated with the event
